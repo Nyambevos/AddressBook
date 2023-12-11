@@ -45,17 +45,27 @@ class Record:
         ph = list(filter(lambda ph: ph.value == phone, self.phones))
 
         if len(ph) < 1:
-            raise ValueError("No such number was found")
+            return None
 
         return ph[0]
 
 
 class AddressBook(UserDict):
+    def __input_error(func):
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except KeyError:
+                print("No such record found")
+        return wrapper
+
     def add_record(self, record):
         self.data.update({record.name.value: record})
 
+    @__input_error
     def find(self, name):
         return self.data[name]
 
+    @__input_error
     def delete(self, name):
         self.data.pop(name)
