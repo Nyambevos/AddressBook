@@ -1,55 +1,37 @@
+# Address Book
 
+This repository contains a simple implementation of an address book system in Python. It enables users to manage contacts with names and associated phone numbers.
 
-    <h1>Address Book</h1>
+## Getting Started
 
-    <p>This is a simple implementation of an address book system in Python. It allows users to manage contacts with names and associated phone numbers.</p>
+### Prerequisites
 
-    <h2>Getting Started</h2>
+Ensure that you have Python installed on your machine. The code is compatible with Python 3.
 
-    <h3>Prerequisites</h3>
-    <p>Make sure you have Python installed on your machine. This code is compatible with Python 3.</p>
+### Usage
 
-    <h3>Usage</h3>
-    <ol>
-        <li>Clone the repository:</li>
-        <pre><code>git clone https://github.com/your-username/address-book.git
-cd address-book
-</code></pre>
+1. Clone the repository:
 
-        <li>Run the address book:</li>
-        <pre><code>python main.py
-</code></pre>
+    ```bash
+    https://github.com/Nyambevos/python-core-homework-10.git
+    cd python-core-homework-10
+    ```
 
-        <li>Follow the on-screen instructions to interact with the address book.</li>
-    </ol>
+## Code Structure
 
-    <h2>Code Structure</h2>
-    <p>The code is organized into several classes:</p>
-    <ul>
-        <li><code>Field</code>: Represents a generic field (e.g., name, phone).</li>
-        <li><code>Name</code>: Extends <code>Field</code> and represents a contact's name.</li>
-        <li><code>Phone</code>: Extends <code>Field</code> and represents a contact's phone number.</li>
-        <li><code>Record</code>: Represents a contact with a name and one or more phone numbers.</li>
-        <li><code>AddressBook</code>: Extends <code>UserDict</code> and represents the overall address book.</li>
-    </ul>
+The code is organized into several classes:
 
-    <h2>Features</h2>
-    <ul>
-        <li><strong>Add a Record</strong>: Add a new contact to the address book.</li>
-        <li><strong>Find a Record</strong>: Retrieve contact information based on the name.</li>
-        <li><strong>Delete a Record</strong>: Remove a contact from the address book.</li>
-        <li><strong>Add, Remove, and Edit Phones</strong>: Manage phone numbers associated with a contact.</li>
-    </ul>
+- `Field`: Represents a generic field (e.g., name, phone).
+- `Name`: Extends `Field` and represents a contact's name.
+- `Phone`: Extends `Field` and represents a contact's phone number.
+- `Record`: Represents a contact with a name and one or more phone numbers.
+- `AddressBook`: Extends `UserDict` and represents the overall address book.
 
-    <h2>Examples</h2>
-    <pre><code># Example usage of the address book
+## Features
 
-# ... (code snippets demonstrating how to use the address book)
-</code></pre>
+- **Add a Record**: Add a new contact to the address book.
+- **Find a Record**: Retrieve contact information based on the name.
+- **Delete a Record**: Remove a contact from the address book.
+- **Add, Remove, and Edit Phones**: Manage phone numbers associated with a contact.
 
-    <h2>Contributing</h2>
-    <p>Feel free to contribute to the development of this address book system. You can submit bug reports, suggest new features, or even submit pull requests.</p>
-
-    <h2>License</h2>
-    <p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details.</p>
 
