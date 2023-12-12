@@ -51,21 +51,11 @@ class Record:
 
 
 class AddressBook(UserDict):
-    def __input_error(func):
-        def wrapper(*args, **kwargs):
-            try:
-                return func(*args, **kwargs)
-            except KeyError:
-                print("No such record found")
-        return wrapper
-
     def add_record(self, record):
         self.data.update({record.name.value: record})
 
-    @__input_error
     def find(self, name):
-        return self.data[name]
+        return self.data.get(name)
 
-    @__input_error
     def delete(self, name):
-        self.data.pop(name)
+        self.data.pop(name, None)
