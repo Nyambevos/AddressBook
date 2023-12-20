@@ -4,7 +4,7 @@ from datetime import datetime
 
 class Field:
     def __init__(self, value):
-        self.__value = value
+        self.value = value
 
     def __str__(self):
         return str(self.__value)
@@ -28,9 +28,6 @@ class Name(Field):
 
 
 class Phone(Field):
-    def __init__(self, value):
-        self.value = value
-
     def is_valid(self, value):
         if len(value) != 10 or not value.isdigit():
             raise ValueError("Incorrect phone number")
@@ -38,45 +35,30 @@ class Phone(Field):
 
 
 class Birthday(Field):
-    def __init__(self, value):
-        self.value = self.date_conversion(value)
-
-    def date_conversion(self, value):
-        if value is not None:
-            try:
-                return datetime.strptime(value, "%d-%m-%Y").date()
-            except ValueError:
-                raise ValueError("Incorrect data format, should be DD-MM-YYYY")
-
-        return None
-
     def is_valid(self, value):
         if value is not None:
-            if value < datetime.now().date():
-                return True
+            birthday = datetime.strptime(value, "%d-%m-%Y")
+            assert birthday < datetime.now()
+            return True
 
 
 class Record:
     def __init__(self, name, birthday=None):
-        self.__name = Name(name)
-        self.__birthday = Birthday(birthday)
-        self.__phones = []
+        self.name = Name(name)
+        self.birthday = Birthday(birthday)
+        self.phones = []
 
     def __str__(self):
-        name = self.__name.value
-        phones = '; '.join(p.value for p in self.__phones)
-        birthday = self.__birthday.value
+        name = self.name.value
+        phones = '; '.join(p.value for p in self.phones)
+        birthday = self.birthday.value
         return f"Contact name: {name}, phones: {phones}, birthday: {birthday}"
 
-    @property
-    def name(self):
-        return self.__name
-
     def add_phone(self, phone):
-        self.__phones.append(Phone(phone))
+        self.phones.append(Phone(phone))
 
     def remove_phone(self, phone):
-        self.__phones.remove(self.find_phone(phone))
+        self.phones.remove(self.find_phone(phone))
 
     def edit_phone(self, old_phone, new_phone):
         obj_old_phone = self.find_phone(old_phone)
@@ -84,12 +66,12 @@ class Record:
         if obj_old_phone is None:
             raise ValueError
 
-        index_old_phone = self.__phones.index(obj_old_phone)
+        index_old_phone = self.phones.index(obj_old_phone)
 
-        self.__phones[index_old_phone] = Phone(new_phone)
+        self.phones[index_old_phone] = Phone(new_phone)
 
     def find_phone(self, phone):
-        ph = list(filter(lambda ph: ph.value == phone, self.__phones))
+        ph = list(filter(lambda ph: ph.value == phone, self.phones))
 
         if len(ph):
             return ph[0]
@@ -97,15 +79,18 @@ class Record:
         return None
 
     def days_to_birthday(self):
-        if self.__birthday is not None:
-            next_birthday = self.__birthday.value.replace(
+        if self.birthday is not None:
+            birthday = datetime.strptime(
+                self.birthday.value, "%d-%m-%Y")
+
+            next_birthday = birthday.replace(
                 year=datetime.now().year)
 
-            if next_birthday < datetime.now().date():
+            if next_birthday < datetime.now():
                 next_birthday = next_birthday.replace(
                     year=next_birthday.year + 1)
 
-            difference = next_birthday - datetime.now().date()
+            difference = next_birthday.date() - datetime.now().date()
 
             return difference.days
 
