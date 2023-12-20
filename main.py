@@ -39,13 +39,17 @@ class Phone(Field):
 
 class Birthday(Field):
     def __init__(self, value):
-        self.value = value
+        self.value = self.date_conversion(value)
+
+    def date_conversion(self, value):
+        if value is not None:
+            return datetime.strptime(value, "%d/%m/%Y").date()
+        return None
 
     def is_valid(self, value):
         if value is not None:
-            self._value = datetime.strptime(value, "%d/%m/%Y")
-        else:
-            self._value = value
+            if value < datetime.now().date():
+                return True
 
 
 class Record:
@@ -93,11 +97,11 @@ class Record:
             next_birthday = self.__birthday.value.replace(
                 year=datetime.now().year)
 
-            if next_birthday < datetime.now():
+            if next_birthday < datetime.now().date():
                 next_birthday = next_birthday.replace(
                     year=next_birthday.year + 1)
 
-            difference = next_birthday.date() - datetime.now().date()
+            difference = next_birthday - datetime.now().date()
 
             return difference.days
 
