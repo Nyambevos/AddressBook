@@ -43,7 +43,11 @@ class Birthday(Field):
 
     def date_conversion(self, value):
         if value is not None:
-            return datetime.strptime(value, "%d/%m/%Y").date()
+            try:
+                return datetime.strptime(value, "%d-%m-%Y").date()
+            except ValueError:
+                raise ValueError("Incorrect data format, should be DD-MM-YYYY")
+
         return None
 
     def is_valid(self, value):
