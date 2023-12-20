@@ -23,8 +23,10 @@ class Field:
 
 
 class Name(Field):
-    def __init__(self, value):
-        self.value = value
+    def is_valid(self, value):
+        if value.isalnum():
+            return True
+        raise ValueError("Incorrect name")
 
 
 class Phone(Field):
@@ -38,7 +40,8 @@ class Birthday(Field):
     def is_valid(self, value):
         if value is not None:
             birthday = datetime.strptime(value, "%d-%m-%Y")
-            assert birthday < datetime.now()
+            if birthday > datetime.now():
+                raise ValueError("Incorrect birthday's date")
             return True
 
 
@@ -107,11 +110,10 @@ class AddressBook(UserDict):
     def delete(self, name):
         self.data.pop(name, None)
 
-    def __iter__(self):
-        self.keys_records = list(self.data.keys())
-        return self
+    def get_records_iter(self, amount):
+        index = 0
+        records_list = list(self.data.values())
 
-    def __next__(self):
-        if self.keys_records:
-            return self.data[self.keys_records.pop()]
-        raise StopIteration
+        while index < len(records_list):
+            yield records_list[index:index + amount]
+            index += amount
