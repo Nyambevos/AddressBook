@@ -110,7 +110,7 @@ class AddressBook(UserDict):
     def delete(self, name):
         self.data.pop(name, None)
 
-    def get_records_iter(self, amount):
+    def iterator(self, amount=1):
         index = 0
         records_list = list(self.data.values())
 
