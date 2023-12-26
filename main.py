@@ -1,5 +1,6 @@
 from collections import UserDict
 from datetime import datetime
+import pickle
 
 
 class Field:
@@ -117,3 +118,24 @@ class AddressBook(UserDict):
         while index < len(records_list):
             yield records_list[index:index + amount]
             index += amount
+
+    def save_to_file(self, filename):
+        with open(filename, "wb") as file:
+            pickle.dump(self.data, file)
+
+    def load_from_file(self, filename):
+        with open(filename, "rb") as file:
+            self.data = pickle.load(file)
+
+    def find_by_key(self, key):
+        match_records = []
+        for record in self.data.values():
+            if key in record.name.value:
+                match_records.append(record)
+                continue
+            else:
+                for phone in record.phones:
+                    if key in phone.value:
+                        match_records.append(record)
+                        break
+        return match_records if match_records else None
